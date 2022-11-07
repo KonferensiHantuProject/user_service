@@ -1,12 +1,12 @@
 // Contoh Routing
 const express = require('express');
 const router = express.Router();
-const UsertController = require('../controllers/UserController');
+const UserController = require('../controllers/UserController');
 
 // Defining Controller
-const usertController = new UsertController();
+const userController = new UserController();
 
 // Register
-router.get('/', usertController.register);
+router.post('/', userController.register);
 
 module.exports = router;

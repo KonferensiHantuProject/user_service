@@ -11,7 +11,11 @@ class UserController{
         try {
 
             // Register
-            return ResponseBulider.success(res, 'Register');      
+            User.create(req.body, (error, result) => {
+       
+                // Return 
+                return ResponseBulider.success(res, result);
+            });   
 
         } catch (error) {
             // If Error
