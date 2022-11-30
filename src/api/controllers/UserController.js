@@ -4,11 +4,19 @@ const User = require('../models/User');
 // Helpers
 const ResponseBulider = require('../helpers/responseBuilder');
 
+// Crypto JS
+const CryptoJS = require('crypto-js');
+
 class UserController{
 
     // Register
     register = async (req, res) => {
         try {
+            // Hash Password
+            var hash = CryptoJS.SHA3(req.body.password);
+
+            // Adding Hashed Password
+            req.body.password = hash.toString();
 
             // Register
             User.create(req.body, (error, result) => {
