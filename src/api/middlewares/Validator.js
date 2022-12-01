@@ -4,7 +4,7 @@ const { body, validationResult, check } = require('express-validator');
 const User = require('../models/User');
 
 class Validator {
-    
+
     // Validation For Post
     userValidtaion = () => {
       return [
@@ -12,7 +12,7 @@ class Validator {
           check('email', 'Email Tidak Valid').isString(),
     
           // Cek Fist Name
-          check('fisrt_name', 'First Name Tidak Valid').isString(),
+          check('first_name', 'First Name Tidak Valid').isString(),
     
           // Cek Last Name
           check('last_name', 'Last Name Tidak Valid').isString(),
