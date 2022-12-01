@@ -1,7 +1,7 @@
 // Contoh Routing
 const express = require('express');
 const router = express.Router();
-const Validator = require('../middlewares/Validator');
+const Validator = require('../middlewares/validator');
 const UserController = require('../controllers/UserController');
 
 // Defining Controller
