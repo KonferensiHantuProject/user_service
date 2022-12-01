@@ -19,7 +19,7 @@ class AuthController{
     auth = async (req, res) => {
         try {
 
-            // Getting all user
+            // Getting one user
             const user = await User.findOne({ email: req.body.email });
 
             // Hash Password
@@ -46,7 +46,7 @@ class AuthController{
             }
             ).then(async (result) => {
             
-                // Getting one post 
+                // Getting one user 
                 const updateUser = await User.findOne({ _id: user._id });
 
                 // Redirect 

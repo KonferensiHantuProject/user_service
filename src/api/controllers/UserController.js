@@ -50,18 +50,32 @@ class UserController{
     // Update User
     update = async (req, res) => {
         try {
-            // Hash Password
-            var hash = CryptoJS.SHA3(req.body.password);
+            // Konstanta errors
+            const errors = validationResult(req);
 
-            // Adding Hashed Password
-            req.body.password = hash.toString();
+            // Kalau error
+            if(!errors.isEmpty())
+            {
+                // Status
+                res.status(422);
 
-            // Register
-            User.create(req.body, (error, result) => {
-       
                 // Return 
-                return ResponseBulider.success(res, result);
-            });   
+                return ResponseBulider.error(res, 422, errors.errors);   
+            }else{
+                // Hash Password
+                var hash = CryptoJS.SHA3(req.body.password);
+    
+                // Adding Hashed Password
+                req.body.password = hash.toString();
+    
+                // Finding user
+                const user = await User.findOne({ email: req.body.email });
+
+                // Update User
+                await user.updateOne(req.body).then( (result) =>{
+                    return ResponseBulider.success(res, result);
+                });
+            }
 
         } catch (error) {
             // If Error

@@ -7,7 +7,7 @@ const ResponseBulider = require('../helpers/responseBuilder');
 
 class Auth {
 
-authenticateJWT = (req, res, next) => {
+static authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
   
     if (authHeader) {

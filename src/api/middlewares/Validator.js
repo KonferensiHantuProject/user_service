@@ -5,8 +5,8 @@ const User = require('../models/User');
 
 class Validator {
 
-    // Validation For Post
-    userValidtaion = () => {
+    // Validation For Create User
+    static createUserValidtaion = () => {
       return [
           // Cek email
           check('email', 'Email Tidak Valid').isString(),
@@ -20,26 +20,48 @@ class Validator {
           // Custom Validation
           body('username').custom(async (value, { req }) => {
       
-              // Cek Duplikatnya
-              const duplicate = await User.findOne({ username: value });
+            // Cek Duplikatnya
+            const duplicate = await User.findOne({ username: value });
+
+            // If there is a duplicate
+            if(duplicate){
+                throw new Error('Username Sudah ada')
+            }            
+
+            return true;
       
-              // Checking old username
-              if(req.body.oldUsername)
-              {
-                  // If duplicate exist and username is changed
-                  if(value != req.body.oldUsername && duplicate){
-                      throw new Error('Username Sudah ada')
-                  }
+          })
+        ]
+    }
+
+    // Validation For Update User
+    static updateUserValidtaion = () => {
+      return [
+          // Cek email
+          check('email', 'Email Tidak Valid').isString(),
+    
+          // Cek Fist Name
+          check('first_name', 'First Name Tidak Valid').isString(),
+    
+          // Cek Last Name
+          check('last_name', 'Last Name Tidak Valid').isString(),
       
-              }else{
+          // Custom Validation
+          body('username').custom(async (value, { req }) => {
       
-                  // If there is a duplicate
-                  if(duplicate){
-                      throw new Error('Username Sudah ada')
-                  }            
-              }
-      
-              return true;
+            // Cek Duplikatnya
+            const duplicate = await User.find({ username: value });
+
+            // If there is a duplicate
+            if(duplicate.length == 1) {
+                if(duplicate[0]._id != req.user.userId) {
+                    throw new Error('Username Sudah adaa')
+                }
+            }else{
+                throw new Error('Username Sudah ada')
+            }            
+
+            return true;
       
           })
         ]
@@ -47,7 +69,7 @@ class Validator {
     
     
     // Sending Error (Whether Error exist or not)
-    validate = (req, res, next) => {
+    static validate = (req, res, next) => {
       const errors = validationResult(req)
       if (errors.isEmpty()) {
         return next()
