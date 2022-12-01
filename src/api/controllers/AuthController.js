@@ -1,8 +1,8 @@
 // Model
 const User = require('../models/User');
 
-// JWT 
-const jwt = require("jsonwebtoken");
+// JWT Helper
+const JWTHelper = require('../helpers/jwtHelper');
 
 // Helpers
 const ResponseBulider = require('../helpers/responseBuilder');
@@ -19,9 +19,6 @@ class AuthController{
     auth = async (req, res) => {
         try {
 
-            // Token
-            let token;
-
             // Getting all user
             const user = await User.findOne({ email: req.body.email });
 
@@ -35,11 +32,7 @@ class AuthController{
             }
 
             // Preparing Token
-            token = jwt.sign(
-                { userId: user._id, email: user.email },
-                "secretkeyappearshere",
-                { expiresIn: "1h" }
-              );
+            const token = JWTHelper.token(user);
             
             // Updating Token
             User.updateOne(
@@ -51,7 +44,7 @@ class AuthController{
                     token: token
                 }
             }
-            ).then( async (result) => {
+            ).then(async (result) => {
             
                 // Getting one post 
                 const updateUser = await User.findOne({ _id: user._id });
