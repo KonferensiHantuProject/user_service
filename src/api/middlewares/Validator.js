@@ -53,13 +53,15 @@ class Validator {
             const duplicate = await User.find({ username: value });
 
             // If there is a duplicate
-            if(duplicate.length == 1) {
-                if(duplicate[0]._id != req.user.userId) {
-                    throw new Error('Username Sudah adaa')
-                }
-            }else{
-                throw new Error('Username Sudah ada')
-            }            
+            if(duplicate != 0){
+                if(duplicate.length == 1) {
+                    if(duplicate[0]._id != req.user.userId) {
+                        throw new Error('Username Sudah adaa')
+                    }
+                }else{
+                    throw new Error('Username Sudah ada')
+                }            
+            }
 
             return true;
       

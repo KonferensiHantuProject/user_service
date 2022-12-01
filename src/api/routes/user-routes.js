@@ -14,4 +14,7 @@ router.post('/', Validator.createUserValidtaion(), Validator.validate, userContr
 // Update User
 router.put('/', Auth.authenticateJWT, Validator.updateUserValidtaion(), Validator.validate, userController.update);
 
+// Delete User
+router.delete('/', Auth.authenticateJWT, userController.delete);
+
 module.exports = router;

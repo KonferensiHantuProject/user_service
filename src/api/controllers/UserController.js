@@ -69,13 +69,34 @@ class UserController{
                 req.body.password = hash.toString();
     
                 // Finding user
-                const user = await User.findOne({ email: req.body.email });
+                const user = await User.findOne({  _id: req.user.userId });
+                
+                if(user == null) {
+                    return ResponseBulider.error(res, 404, 'User Not Found');
+                }
 
                 // Update User
                 await user.updateOne(req.body).then( (result) =>{
                     return ResponseBulider.success(res, result);
                 });
             }
+
+        } catch (error) {
+            // If Error
+            return ResponseBulider.error(res, 500, error.message);
+        }
+    }
+
+    // Delete User
+    delete = async (req, res) => {
+        try {
+
+            // Delete Process
+            User.deleteOne({ _id: req.user.userId }).then((result) => {
+                
+                // Redirect 
+                return ResponseBulider.success(res, result);
+            });     
 
         } catch (error) {
             // If Error

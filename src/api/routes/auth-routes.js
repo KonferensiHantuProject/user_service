@@ -7,9 +7,6 @@ const AuthController = require('../controllers/AuthController');
 // Defining Controller
 const authController = new AuthController();
 
-// Defining Validator
-const validator = new Validator();
-
 // Auth
 router.post('/', authController.auth);
 
