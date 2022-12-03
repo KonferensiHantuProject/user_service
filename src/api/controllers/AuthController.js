@@ -22,36 +22,36 @@ class AuthController{
             // Getting one user
             const user = await User.findOne({ email: req.body.email });
 
+            // Checking Email
+            if(!user) throw new Error('Email Belum Terdaftar');
+
             // Hash Password
             var hash = CryptoJS.SHA3(req.body.password);
 
             // Checking Password
             if(req.body.email != user.email || user.password != hash.toString())
             {
-                return ResponseBulider.error(res, 400, 'Username atau Password Salah');
+                throw new Error('Email atau Password Salah')
             }
 
             // Preparing Token
             const token = JWTHelper.token(user);
             
-            // Updating Token
-            User.updateOne(
-            {
-                _id: user._id
-            },
+            // Update User
+            const process = await user.updateOne(
             {
                 $set: {
                     token: token
                 }
-            }
-            ).then(async (result) => {
-            
-                // Getting one user 
-                const updateUser = await User.findOne({ _id: user._id });
+            })
 
+            // Checking Update Process
+            if(process.acknowledged) {
+                const updatedUser = await User.findOne({ email: req.body.email });
+                
                 // Redirect 
-                return ResponseBulider.success(res, updateUser);
-            });
+                return ResponseBulider.success(res, updatedUser);
+            }
 
         } catch (error) {
             // If Error

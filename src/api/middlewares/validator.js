@@ -8,6 +8,9 @@ class Validator {
     // Validation For Create User
     static createUserValidtaion = () => {
       return [
+          // Cek username
+          check('username', 'Username Tidak Valid').isString(),
+
           // Cek email
           check('email', 'Email Tidak Valid').isString(),
     
@@ -37,6 +40,10 @@ class Validator {
     // Validation For Update User
     static updateUserValidtaion = () => {
       return [
+
+          // Cek Username
+          check('username', 'Username Tidak Valid').isString(),
+
           // Cek email
           check('email', 'Email Tidak Valid').isString(),
     
