@@ -21,11 +21,15 @@ class UserController{
             // Kalau error
             if(!errors.isEmpty())
             {
-                // Status
-                res.status(422);
+                // Errors
+                errors.errors.forEach(error => {
+                    // Status
+                    res.status(422);
 
-                // Return 
-                return ResponseBulider.error(res, 422, errors.errors);   
+                    // Throw error
+                    throw new Error(error.msg);
+                });
+
             }else{
                 // Hash Password
                 var hash = CryptoJS.SHA3(req.body.password);
@@ -43,7 +47,7 @@ class UserController{
 
         } catch (error) {
             // If Error
-            return ResponseBulider.error(res, 500, error.message);
+            return ResponseBulider.error(res, res.statusCode, error.message);
         }
     }
 
@@ -56,11 +60,15 @@ class UserController{
             // Kalau error
             if(!errors.isEmpty())
             {
-                // Status
-                res.status(422);
+                // Errors
+                errors.errors.forEach(error => {
+                    // Status
+                    res.status(422);
 
-                // Return 
-                return ResponseBulider.error(res, 422, errors.errors);   
+                    // Throw error
+                    throw new Error(error.msg);
+                });
+
             }else{
                 // Hash Password
                 var hash = CryptoJS.SHA3(req.body.password);
@@ -72,7 +80,11 @@ class UserController{
                 const user = await User.findOne({  _id: req.user.userId });
                 
                 if(user == null) {
-                    return ResponseBulider.error(res, 404, 'User Not Found');
+                    // Status
+                    res.status(404);
+
+                    // Throw error
+                    throw new Error('User Not Found');
                 }
 
                 // Update User
@@ -83,7 +95,7 @@ class UserController{
 
         } catch (error) {
             // If Error
-            return ResponseBulider.error(res, 500, error.message);
+            return ResponseBulider.error(res, res.statusCode, error.message);
         }
     }
 
@@ -100,7 +112,7 @@ class UserController{
 
         } catch (error) {
             // If Error
-            return ResponseBulider.error(res, 500, error.message);
+            return ResponseBulider.error(res, 500, error);
         }
     }
 

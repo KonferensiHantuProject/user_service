@@ -31,6 +31,9 @@ class AuthController{
             // Checking Password
             if(req.body.email != user.email || user.password != hash.toString())
             {
+                // Status
+                res.status(403);
+
                 throw new Error('Email atau Password Salah')
             }
 
@@ -51,11 +54,17 @@ class AuthController{
                 
                 // Redirect 
                 return ResponseBulider.success(res, updatedUser);
+            }else{
+                // Status
+                res.status(403);
+                
+                // Fail
+                throw new Error('Update Gagal')
             }
 
         } catch (error) {
             // If Error
-            return ResponseBulider.error(res, 500, error.message);
+            return ResponseBulider.error(res, res.statusCode, error.message);
         }
     }
 
