@@ -112,7 +112,7 @@ class UserController{
 
         } catch (error) {
             // If Error
-            return ResponseBulider.error(res, 500, error);
+            return ResponseBulider.error(res, 500, error.message);
         }
     }
 
