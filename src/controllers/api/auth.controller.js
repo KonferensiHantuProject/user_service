@@ -1,5 +1,5 @@
 // Model
-const User = require('../../models/User');
+const User = require('../../models/user.model');
 
 // JWT Helper
 const { createToken } = require('../../helpers/jwtHelper');

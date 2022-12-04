@@ -1,5 +1,5 @@
 // Model
-const User = require('../../models/User');
+const User = require('../../models/user.model');
 
 // Helpers
 const responseBuilder = require('../../helpers/responseBuilder');
@@ -87,7 +87,7 @@ update = async (req, res) => {
 
             // Update User
             await user.updateOne(req.body).then( (result) =>{
-                return responseBuilder.responseBuilder.success(res, result);
+                return responseBuilder.success(res, result);
             });
         }
 
