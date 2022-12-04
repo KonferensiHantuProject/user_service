@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 
 // Response Builder
-const { errors } = require('../helpers/responseBuilder');
+const responseBuilder = require('../helpers/responseBuilder');
 
 authenticateJWT = (req, res, next) => {
 
@@ -14,14 +14,14 @@ authenticateJWT = (req, res, next) => {
         // Verifying Token
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
-                return error(res, 403, err.message); 
+                return responseBuilder.errors(res, 403, err.message); 
             }
   
             req.user = user;
             next();
         });
     } else {
-        return errors(res, 401, 'Tidak ada Token'); 
+        return responseBuilder.errors(res, 401, 'Tidak ada Token'); 
     }
 }
 

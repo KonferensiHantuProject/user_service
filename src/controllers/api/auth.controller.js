@@ -5,7 +5,7 @@ const User = require('../../models/User');
 const { createToken } = require('../../helpers/jwtHelper');
 
 // Helpers
-const { success, errors } = require('../../helpers/responseBuilder');
+const responseBuilder = require('../../helpers/responseBuilder');
 
 // Crypto JS
 const CryptoJS = require('crypto-js');
@@ -48,7 +48,7 @@ auth = async (req, res) => {
             const updatedUser = await User.findOne({ email: req.body.email });
             
             // Redirect 
-            return success(res, updatedUser);
+            return responseBuilder.success(res, updatedUser);
         }else{
             // Status
             res.status(403);
@@ -59,7 +59,7 @@ auth = async (req, res) => {
 
     } catch (error) {
         // If Error
-        return errors(res, res.statusCode, error.message);
+        return responseBuilder.errors(res, res.statusCode, error.message);
     }
 }
 
