@@ -3,10 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { createUserValidtaion, updateUserValidtaion,validate} = require('../middlewares/validator');
 const { authenticateJWT } = require('../middlewares/auth');
-const UserController = require('../controllers/api/user.controller');
-
-// Defining Controller
-const userController = new UserController();
+const userController = require('../controllers/api/user.controller');
 
 // Register
 router.post('/users', createUserValidtaion(), validate, userController.register);
@@ -15,6 +12,6 @@ router.post('/users', createUserValidtaion(), validate, userController.register)
 router.put('/users', authenticateJWT, updateUserValidtaion(), validate, userController.update);
 
 // Delete User
-router.delete('/users', authenticateJWT, userController.delete);
+router.delete('/users', authenticateJWT, userController.destroy);
 
 module.exports = router;

@@ -2,16 +2,13 @@
 const User = require('../../models/User');
 
 // JWT Helper
-const JWTHelper = require('../../helpers/jwtHelper');
+const { createToken } = require('../../helpers/jwtHelper');
 
 // Helpers
 const ResponseBulider = require('../../helpers/responseBuilder');
 
 // Crypto JS
 const CryptoJS = require('crypto-js');
-
-// Validation
-const { validationResult } = require('express-validator');
 
 // Auth User
 auth = async (req, res) => {
@@ -36,7 +33,7 @@ auth = async (req, res) => {
         }
 
         // Preparing Token
-        const token = JWTHelper.token(user);
+        const token = createToken(user);
         
         // Update User
         const process = await user.updateOne(
