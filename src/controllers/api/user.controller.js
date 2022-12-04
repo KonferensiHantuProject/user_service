@@ -2,7 +2,7 @@
 const User = require('../../models/User');
 
 // Helpers
-const ResponseBulider = require('../../helpers/responseBuilder');
+const { success, errors} = require('../../helpers/responseBuilder');
 
 // Crypto JS
 const CryptoJS = require('crypto-js');
@@ -39,13 +39,13 @@ register = async (req, res) => {
             User.create(req.body, (error, result) => {
     
                 // Return 
-                return ResponseBulider.success(res, result);
+                return success(res, result);
             });   
         }
 
     } catch (error) {
         // If Error
-        return ResponseBulider.error(res, res.statusCode, error.message);
+        return errors(res, res.statusCode, error.message);
     }
 }
 
@@ -87,13 +87,13 @@ update = async (req, res) => {
 
             // Update User
             await user.updateOne(req.body).then( (result) =>{
-                return ResponseBulider.success(res, result);
+                return success(res, result);
             });
         }
 
     } catch (error) {
         // If Error
-        return ResponseBulider.error(res, res.statusCode, error.message);
+        return errors(res, res.statusCode, error.message);
     }
 }
 
@@ -105,12 +105,12 @@ destroy = async (req, res) => {
         User.deleteOne({ _id: req.user.userId }).then((result) => {
             
             // Redirect 
-            return ResponseBulider.success(res, result);
+            return success(res, result);
         });     
 
     } catch (error) {
         // If Error
-        return ResponseBulider.error(res, 500, error.message);
+        return errors(res, 500, error.message);
     }
 }
 
