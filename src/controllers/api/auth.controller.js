@@ -1,11 +1,11 @@
 // Model
-const User = require('../models/User');
+const User = require('../../models/User');
 
 // JWT Helper
-const JWTHelper = require('../helpers/jwtHelper');
+const JWTHelper = require('../../helpers/jwtHelper');
 
 // Helpers
-const ResponseBulider = require('../helpers/responseBuilder');
+const ResponseBulider = require('../../helpers/responseBuilder');
 
 // Crypto JS
 const CryptoJS = require('crypto-js');

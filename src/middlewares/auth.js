@@ -1,13 +1,11 @@
 // JWT 
 const jwt = require("jsonwebtoken");
-const accessTokenSecret = 'secretkeyappearshere';
 
 // Response Builder
 const ResponseBulider = require('../helpers/responseBuilder');
 
-class Auth {
+authenticateJWT = (req, res, next) => {
 
-static authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
   
     if (authHeader) {
@@ -25,9 +23,9 @@ static authenticateJWT = (req, res, next) => {
     } else {
         return ResponseBulider.error(res, 401, 'Tidak ada Token'); 
     }
-  }
-
 }
 
 // Exporting modules
-module.exports = Auth;
+module.exports = {
+    authenticateJWT
+};

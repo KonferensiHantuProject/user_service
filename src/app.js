@@ -16,10 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Seperate Route
-const user_route = require('./api/routes/user-routes');
-const auth_route = require('./api/routes/auth-routes');
-app.use('/auth', auth_route);
-app.use('/users', user_route);
+const user_route = require('./routes/user.route');
+const auth_route = require('./routes/auth.route');
+
+app.use('/api/v1', auth_route, user_route);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
