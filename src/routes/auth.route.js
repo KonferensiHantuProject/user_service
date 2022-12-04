@@ -1,11 +1,7 @@
 // Contoh Routing
 const express = require('express');
 const router = express.Router();
-const Validator = require('../middlewares/validator');
-const AuthController = require('../controllers/api/auth.controller');
-
-// Defining Controller
-const authController = new AuthController();
+const authController = require('../controllers/api/auth.controller');
 
 // Auth
 router.post('/auth', authController.auth);
